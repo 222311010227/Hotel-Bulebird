@@ -1,0 +1,282 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid admin-dashboard">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-2 px-0">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h3 class="text-center">Admin Panel</h3>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-controller="Admin" asp-action="Index">
+                            <i class="fas fa-tachometer-alt me-2"></i>📅DASHBOARD
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ManageUser" asp-action="Index">
+                            👤MANAGE USERS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ManageRoomBooking" asp-action="Index">
+                            <i class="fas fa-hotel me-2"></i>🏨MANAGE BOOKING
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Room" asp-action="Index">
+                            <i class="fas fa-plus-circle me-2"></i>📅ADD ROOM
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Payment" asp-action="ManagePayment">
+                            <i class="fas fa-money-bill-wave me-2"></i> ₹ PAYMENT
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Staff" asp-action="Index">
+                            <i class="fas fa-users me-2"></i>👤STAFF
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ManageReview" asp-action="Index">
+                            <i class="fas fa-star me-2"></i>🌟MANAGE REVIEW
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="AdminChangePassword" asp-action="Index">
+                            <i class="fas fa-key me-2"></i>🔒CHANGE PASSWORD
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="AdminLogin">
+                            <i class="fas fa-sign-out-alt me-2"></i>⚡LOGOUT
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10 ms-auto">
+            <div class="dashboard-content">
+                <div class="header mb-4">
+                    <h3 class="fw-bold">Welcome, Admin!</h3>
+                    <p class="text-muted">Here's your dashboard overview</p>
+                </div>
+
+                <div class="row stats-row">
+                    <!-- Total Rooms Card -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card stat-card border-start-primary h-100">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs fw-bold text-primary text-uppercase mb-1">
+                                            Total Rooms
+                                        </div>
+                                        <div class="h5 mb-0 fw-bold text-gray-800">@ViewBag.TotalRooms</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-door-open fa-2x text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Booked Rooms Card -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card stat-card border-start-success h-100">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs fw-bold text-success text-uppercase mb-1">
+                                            Booked Rooms
+                                        </div>
+                                        <div class="h5 mb-0 fw-bold text-gray-800">@ViewBag.BookedRooms</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-bed fa-2x text-success"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Payment Card -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card stat-card border-start-info h-100">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs fw-bold text-info text-uppercase mb-1">
+                                            Total Payment
+                                        </div>
+                                        <div class="h5 mb-0 fw-bold text-gray-800">₹@Convert.ToDecimal(ViewBag.TotalPayment).ToString("N0")</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-rupee-sign fa-2x text-info"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* <div class="h5 mb-0 fw-bold text-gray-800">@ViewBag.TotalRooms</div> *@
+                @* <div class="h5 mb-0 fw-bold text-gray-800">@ViewBag.BookedRooms</div> *@
+                @* <div class="h5 mb-0 fw-bold text-gray-800">₹@Convert.ToDecimal(ViewBag.TotalPayment).ToString("N0")</div> *@
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-color: #16a085;
+        --sidebar-bg: #1f2d3d;
+        --sidebar-hover: rgba(22, 160, 133, 0.2);
+        --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+        background-color: var(--sidebar-bg);
+        color: white;
+        height: 100vh;
+        position: fixed;
+        width: 250px;
+        padding-top: 20px;
+    }
+
+    .sidebar-header {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 15px;
+    }
+
+    .sidebar h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .sidebar .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 12px 20px;
+        border-radius: 4px;
+        margin: 4px 15px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: var(--sidebar-hover);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: var(--primary-color);
+        }
+
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+    /* Main Content */
+    .dashboard-content {
+        padding: 30px;
+    }
+
+    .header h3 {
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Stat Cards */
+    .stat-card {
+        border-left: 0.25rem solid !important;
+        transition: transform 0.3s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow);
+        }
+
+    .border-start-primary {
+        border-left-color: #4e73df !important;
+    }
+
+    .border-start-success {
+        border-left-color: #1cc88a !important;
+    }
+
+    .border-start-info {
+        border-left-color: #36b9cc !important;
+    }
+
+    /* Activity Feed */
+    .activity-feed {
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .activity-item {
+        position: relative;
+        padding-bottom: 20px;
+        padding-left: 40px;
+        border-left: 2px solid #e9ecef;
+    }
+
+        .activity-item:last-child {
+            border-left: 0;
+        }
+
+        .activity-item::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            left: -7px;
+            background-color: #e9ecef;
+            border-radius: 50%;
+            top: 0;
+        }
+
+    .activity-icon {
+        position: absolute;
+        left: 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+
+    .activity-content {
+        padding-left: 15px;
+    }
+
+    /* Responsive Adjustments */
+    @@media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .dashboard-content {
+            padding: 20px 15px;
+        }
+    }
+</style>

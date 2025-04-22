@@ -1,0 +1,113 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BLUEBIRD HOTEL - Admin Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            display: flex;
+            width: 900px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .image-section {
+            width: 50%;
+            background: url("/Images/hotel-login-image.png") no-repeat center center/cover;
+        }
+
+        .form-section {
+            width: 50%;
+            padding: 40px;
+            text-align: center;
+        }
+
+            .form-section h2 {
+                color: #007bff;
+            }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+            .form-group label {
+                font-weight: bold;
+            }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .forgot-password {
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="image-section"></div>
+        <div class="form-section">
+            <h2>BLUEBIRD HOTEL</h2>
+            <h3>Admin Login</h3>
+            <form method="post" action="@Url.Action("AdminLogin", "Account")">
+                <div class="form-group">
+                    <label>Admin Username:</label>
+                    <input type="text" name="Username" class="form-control" placeholder="Enter admin username" required />
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" name="Password" class="form-control" placeholder="Enter admin password" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <br>
+                 @* <a href="#" class="forgot-password">Forgot Password?</a>  *@
+                <br>
+                <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Login", "Account")'">Back to User Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

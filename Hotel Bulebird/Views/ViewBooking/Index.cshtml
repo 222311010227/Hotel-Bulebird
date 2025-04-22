@@ -1,0 +1,144 @@
+﻿@model IEnumerable<Hotel_Bulebird.Models.ConfirmedBooking>
+
+
+@{
+    ViewData["Title"] = "View Booking";
+}
+
+<div class="container-fluid user-dashboard">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 px-0">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>User Panel</h2>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fas fa-hotel me-2"></i>🏨ROOM BOOK</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Index"><i class="fas fa-user me-2"></i>👤USER PROFILE</a></li>
+                    <li class="nav-item"><a class="nav-link active" asp-controller="ViewBooking" asp-action="Index"><i class="fas fa-calendar-alt me-2"></i>📅VIEW BOOKING</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Review" asp-action="Index"><i class="fas fa-ticket-alt me-2"></i>✍️REVIEW</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="ChangePassword" asp-action="Index"><i class="fas fa-lock me-2"></i>🔒CHANGE PASSWORD</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Login"><i class="fas fa-sign-out-alt me-2"></i>⚡LOGOUT</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 ms-auto">
+            <div class="dashboard-content">
+                <div class="header mb-4">
+                    <h3 class="fw-bold">Your Bookings</h3>
+                    <p class="text-muted">View and manage your current and past reservations</p>
+                </div>
+
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        @if (Model.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Room Type</th>
+                                            <th>Check-In</th>
+                                            <th>Check-Out</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var booking in Model.Select((value, index) => new { value, index }))
+                                        {
+                                            <tr>
+                                                <td>@(booking.index + 1)</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="room-img-placeholder bg-primary me-3"></div>
+                                                        <span>@booking.value.RoomType</span>
+                                                    </div>
+                                                </td>
+                                                <td>@booking.value.CheckInDate.ToString("MMM dd, yyyy")</td>
+                                                <td>@booking.value.CheckOutDate.ToString("MMM dd, yyyy")</td>
+                                                <td>₹@booking.value.TotalAmount</td>
+                                                <td>
+                                                    <span class="badge
+                                                        @(booking.value.Status == "Confirmed" ? "bg-success" :
+                                                          booking.value.Status == "Pending" ? "bg-warning text-dark" :
+                                                          "bg-danger")">
+                                                        @booking.value.Status
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-center text-muted">No bookings found.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-color: #16a085;
+        --sidebar-bg: #1f2d3d;
+        --sidebar-hover: rgba(22, 160, 133, 0.2);
+        --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .sidebar {
+        background-color: var(--sidebar-bg);
+        color: white;
+        height: 100vh;
+        position: fixed;
+        width: 260px;
+        padding-top: 20px;
+    }
+
+    .sidebar-header {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 15px;
+    }
+
+    .sidebar .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 12px 20px;
+        border-radius: 4px;
+        margin: 4px 15px;
+        font-size: 0.95rem;
+    }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: var(--sidebar-hover);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: var(--primary-color);
+        }
+
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+    .dashboard-content {
+        padding: 30px;
+    }
+
+    .header h3 {
+        color: #2c3e50;
+    }
+
+    .table th {

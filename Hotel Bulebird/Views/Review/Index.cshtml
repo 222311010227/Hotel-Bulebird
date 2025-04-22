@@ -1,0 +1,333 @@
+﻿@{
+    ViewData["Title"] = "Review";
+}
+
+<div class="container-fluid user-dashboard">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 px-0">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>User Panel</h2>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">
+                            <i class="fas fa-hotel me-2"></i>🏨ROOM BOOK
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="User" asp-action="Index">
+                            <i class="fas fa-user me-2"></i>👤USER PROFILE
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ViewBooking" asp-action="Index">
+                            <i class="fas fa-calendar-alt me-2"></i>📅VIEW BOOKING
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-controller="Review" asp-action="Index">
+                            <i class="fas fa-star me-2"></i>✍️REVIEW
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ChangePassword" asp-action="Index">
+                            <i class="fas fa-lock me-2"></i>🔒CHANGE PASSWORD
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Login">
+                            <i class="fas fa-sign-out-alt me-2"></i>⚡LOGOUT
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 ms-auto">
+            <div class="dashboard-content">
+                <div class="header mb-4">
+                    <h3 class="fw-bold">We Value Your Feedback!</h3>
+                    <p class="text-muted">Please share your experience with us</p>
+                </div>
+
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <form method="post" action="@Url.Action("SubmitReview", "Review")" class="review-form">
+                            <!-- Cleanliness -->
+                            <div class="rating-item mb-4">
+                                <label class="rating-label">How was the cleanliness of the room?</label>
+                                <div class="rating-stars" data-name="cleanliness">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <span class="star" data-value="@i">★</span>
+                                    }
+                                </div>
+                                <div class="rating-description text-muted">(1 = Poor, 5 = Excellent)</div>
+                            </div>
+
+                            <!-- Staff -->
+                            <div class="rating-item mb-4">
+                                <label class="rating-label">How was the behavior of the staff?</label>
+                                <div class="rating-stars" data-name="staff">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <span class="star" data-value="@i">★</span>
+                                    }
+                                </div>
+                                <div class="rating-description text-muted">(1 = Unfriendly, 5 = Very Friendly)</div>
+                            </div>
+
+                            <!-- Food -->
+                            <div class="rating-item mb-4">
+                                <label class="rating-label">How was the quality of the food?</label>
+                                <div class="rating-stars" data-name="food">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <span class="star" data-value="@i">★</span>
+                                    }
+                                </div>
+                                <div class="rating-description text-muted">(1 = Poor, 5 = Excellent)</div>
+                            </div>
+
+                            <!-- Comfort -->
+                            <div class="rating-item mb-4">
+                                <label class="rating-label">How was the overall comfort of the stay?</label>
+                                <div class="rating-stars" data-name="comfort">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <span class="star" data-value="@i">★</span>
+                                    }
+                                </div>
+                                <div class="rating-description text-muted">(1 = Uncomfortable, 5 = Very Comfortable)</div>
+                            </div>
+
+                            <!-- Recommendation -->
+                            <div class="rating-item mb-4">
+                                <label class="rating-label">Would you recommend us to others?</label>
+                                <div class="rating-stars" data-name="recommendation">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <span class="star" data-value="@i">★</span>
+                                    }
+                                </div>
+                                <div class="rating-description text-muted">(1 = Not Likely, 5 = Definitely)</div>
+                            </div>
+
+                            <!-- Comments -->
+                            <div class="mb-4">
+                                <label for="comments" class="form-label fw-bold">Additional Comments</label>
+                                <textarea class="form-control" id="comments" name="comments" rows="3" placeholder="Any other feedback you'd like to share?"></textarea>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-paper-plane me-2"></i>Submit Review
+                                </button>
+                            </div>
+
+
+                            <!-- ALERT MESSAGE -->
+                            @if (TempData["Success"] != null)
+                            {
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    ✅ <strong>Success:</strong> @TempData["Success"]
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+                            @if (TempData["Error"] != null)
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    ❌ <strong>Error:</strong> @TempData["Error"]
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-color: #16a085;
+        --sidebar-bg: #1f2d3d;
+        --sidebar-hover: rgba(22, 160, 133, 0.2);
+        --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        --star-inactive: #ddd;
+        --star-active: #ffc107;
+        --star-hover: #ffd700;
+    }
+
+    .sidebar {
+        background-color: var(--sidebar-bg);
+        color: white;
+        height: 100vh;
+        position: fixed;
+        width: 260px;
+        padding-top: 20px;
+    }
+
+    .sidebar-header {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 15px;
+    }
+
+    .sidebar .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 12px 20px;
+        border-radius: 4px;
+        margin: 4px 15px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: var(--sidebar-hover);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: var(--primary-color);
+        }
+
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+    .dashboard-content {
+        padding: 30px;
+    }
+
+    .header h3 {
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+
+    .rating-item {
+        padding: 15px;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    .rating-label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+
+    .rating-stars {
+        font-size: 2rem;
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .star {
+        color: var(--star-inactive);
+        cursor: pointer;
+        transition: color 0.2s;
+        margin-right: 5px;
+    }
+
+        .star.active,
+        .star.hover {
+            color: var(--star-hover);
+        }
+
+    .rating-description {
+        font-size: 0.85rem;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 12px;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(22, 160, 133, 0.25);
+        }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        border-radius: 8px;
+    }
+
+        .btn-primary:hover {
+            background-color: #138a72;
+            border-color: #138a72;
+        }
+
+    @@media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .dashboard-content {
+            padding: 20px 15px;
+        }
+
+        .rating-stars {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function () {
+                const value = this.getAttribute('data-value');
+                const starContainer = this.parentElement;
+                const name = starContainer.getAttribute('data-name');
+
+                starContainer.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
+
+                starContainer.querySelectorAll('.star').forEach(s => {
+                    if (s.getAttribute('data-value') <= value) {
+                        s.classList.add('active');
+                    }
+                });
+
+                let input = starContainer.querySelector('input[type="hidden"]');
+                if (!input) {
+                    input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    starContainer.appendChild(input);
+                }
+                input.value = value;
+            });
+
+            star.addEventListener('mouseover', function () {
+                const value = this.getAttribute('data-value');
+                const starContainer = this.parentElement;
+
+                starContainer.querySelectorAll('.star').forEach(s => {
+                    s.classList.remove('hover');
+                    if (s.getAttribute('data-value') <= value) {
+                        s.classList.add('hover');
+                    }
+                });
+            });
+
+            star.addEventListener('mouseout', function () {
+                const starContainer = this.parentElement;
+                starContainer.querySelectorAll('.star').forEach(s => s.classList.remove('hover'));
+            });
+        });
+    });
+</script>

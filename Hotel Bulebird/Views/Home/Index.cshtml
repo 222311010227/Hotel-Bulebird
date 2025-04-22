@@ -1,0 +1,439 @@
+﻿@{
+    ViewData["Title"] = "User Home";
+}
+
+<div class="container-fluid user-dashboard">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 px-0">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>User Panel</h2>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-controller="Home" asp-action="Index">
+                            <i class="fas fa-hotel me-2"></i>🏨ROOM BOOK
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="User" asp-action="Index">
+                            <i class="fas fa-user me-2"></i>👤USER PROFILE
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ViewBooking" asp-action="Index">
+                            <i class="fas fa-calendar-alt me-2"></i>📅VIEW BOOKING
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Review" asp-action="Index">
+                            <i class="fas fa-star me-2"></i>✍️REVIEW
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ChangePassword" asp-action="Index">
+                            <i class="fas fa-lock me-2"></i>🔒CHANGE PASSWORD
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Login">
+                            <i class="fas fa-sign-out-alt me-2"></i>⚡LOGOUT
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 ms-auto">
+            <div class="dashboard-content">
+                <div class="header mb-4">
+                    <h3 class="fw-bold">Welcome Back!</h3>
+                    <p class="text-muted">Browse and book your perfect room</p>
+                </div>
+
+                <div class="room-grid">
+                    <!-- Single Room -->
+                    <div class="room-card">
+                        <div class="room-image-container">
+                            <img src="~/images/single.jpeg" alt="Single Room" class="room-image">
+                            <div class="room-badge">Most Affordable</div>
+                        </div>
+                        <div class="room-body">
+                            <h4 class="room-title">Single Room</h4>
+                            <div class="room-features">
+                                <span><i class="fas fa-user"></i> 1 Guest</span>
+                                <span><i class="fas fa-ruler-combined"></i> 20m²</span>
+                                <span><i class="fas fa-wifi"></i> Free WiFi</span>
+                            </div>
+                            <div class="room-price">
+                                <span class="price">₹500</span>
+                                <span class="period">/night</span>
+                            </div>
+                            <div class="room-actions">
+                                <button class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-info-circle me-1"></i>Details
+                                </button>
+                                <button class="btn btn-primary btn-sm" onclick="openModal('Single Room', 500)">
+                                    <i class="fas fa-calendar-check me-1"></i>Book Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Double Room -->
+                    <div class="room-card">
+                        <div class="room-image-container">
+                            <img src="~/images/double.jpeg" alt="Double Room" class="room-image">
+                        </div>
+                        <div class="room-body">
+                            <h4 class="room-title">Double Room</h4>
+                            <div class="room-features">
+                                <span><i class="fas fa-user-friends"></i> 2 Guests</span>
+                                <span><i class="fas fa-ruler-combined"></i> 30m²</span>
+                                <span><i class="fas fa-wifi"></i> Free WiFi</span>
+                            </div>
+                            <div class="room-price">
+                                <span class="price">₹1000</span>
+                                <span class="period">/night</span>
+                            </div>
+                            <div class="room-actions">
+                                <button class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-info-circle me-1"></i>Details
+                                </button>
+                                <button class="btn btn-primary btn-sm" onclick="openModal('Double Room', 1000)">
+                                    <i class="fas fa-calendar-check me-1"></i>Book Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add similar sections for other room types -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Booking Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Book <span id="roomTypeTitle"></span></h5>
+                <button type="button" class="btn-close" onclick="closeModal()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="bookingForm">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" placeholder="Your full name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" placeholder="Your email" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Check-In Date</label>
+                            <input type="date" class="form-control" id="checkInDate" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Check-Out Date</label>
+                            <input type="date" class="form-control" id="checkOutDate" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Total Amount</label>
+                        <input type="text" class="form-control" id="totalAmount" readonly>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnSubmitBooking">Proceed to Payment</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    function openModal(roomType, pricePerNight) {
+        document.getElementById('roomTypeTitle').textContent = roomType;
+        const checkInDate = document.getElementById('checkInDate');
+        const checkOutDate = document.getElementById('checkOutDate');
+        checkInDate.value = checkOutDate.value = '';
+
+        checkOutDate.addEventListener('change', function () {
+            const checkIn = new Date(checkInDate.value);
+            const checkOut = new Date(this.value);
+            if (checkIn && checkOut && checkOut > checkIn) {
+                const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+                const totalAmount = pricePerNight * nights;
+                document.getElementById('totalAmount').value = `₹${totalAmount}`;
+            }
+        });
+
+        const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
+        modal.show();
+    }
+
+    function closeModal() {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
+        modal.hide();
+    }
+
+    document.getElementById('btnSubmitBooking').addEventListener('click', function () {
+        const fullName = document.querySelector('input[placeholder="Your full name"]').value.trim();
+        const email = document.querySelector('input[placeholder="Your email"]').value.trim();
+        const checkInDate = document.getElementById('checkInDate').value;
+        const checkOutDate = document.getElementById('checkOutDate').value;
+        const totalAmount = parseFloat(document.getElementById('totalAmount').value.replace(/[^\d.]/g, ''));
+        const roomType = document.getElementById('roomTypeTitle').textContent;
+        const nights = Math.ceil((new Date(checkOutDate) - new Date(checkInDate)) / (1000 * 60 * 60 * 24));
+        const pricePerNight = totalAmount / nights;
+
+        if (!fullName || !email || !checkInDate || !checkOutDate) {
+            alert("Please fill all details before payment.");
+            return;
+        }
+
+        var options = {
+            "key": "rzp_test_gwXOXfivGDZ4I9",
+            "amount": totalAmount * 100,
+            "currency": "INR",
+            "name": fullName,
+            "description": "Room Booking",
+            "handler": async function (response) {
+                // Store booking data only after successful payment
+                const booking = {
+                    Username: fullName,  // ✅ Change key to match model
+                    Email: email,
+                    RoomType: roomType,
+                    PricePerNight: pricePerNight,
+                    CheckInDate: checkInDate,
+                    CheckOutDate: checkOutDate,
+                    TotalAmount: totalAmount
+                };
+
+                const result = await fetch('/Booking/SaveBooking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(booking)
+                });
+
+                const res = await result.json();
+                alert(res.message);
+                if (res.success) closeModal();
+            },
+            "prefill": {
+                "name": fullName,
+                "email": email
+            },
+            "theme": {
+                "color": "#16a085"
+            }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+    });
+</script>
+
+
+<style>
+    :root {
+        --primary-color: #16a085;
+        --sidebar-bg: #1f2d3d;
+        --sidebar-hover: rgba(22, 160, 133, 0.2);
+        --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+        background-color: var(--sidebar-bg);
+        color: white;
+        height: 100vh;
+        position: fixed;
+        width: 260px;
+        padding-top: 20px;
+    }
+
+    .sidebar-header {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 15px;
+    }
+
+    .sidebar h2 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .sidebar .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 12px 20px;
+        border-radius: 4px;
+        margin: 4px 15px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: var(--sidebar-hover);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: var(--primary-color);
+        }
+
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+    /* Main Content */
+    .dashboard-content {
+        padding: 30px;
+    }
+
+    .header h3 {
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Room Grid */
+    .room-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+    }
+
+    /* Room Card */
+    .room-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+    .room-image-container {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+    }
+
+    .room-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .room-card:hover .room-image {
+        transform: scale(1.05);
+    }
+
+    .room-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .room-body {
+        padding: 20px;
+    }
+
+    .room-title {
+        font-size: 1.25rem;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+
+    .room-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+        font-size: 0.85rem;
+    }
+
+        .room-features span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #6c757d;
+        }
+
+    .room-price {
+        margin-bottom: 15px;
+    }
+
+    .price {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .period {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    .room-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    /* Modal Styles */
+    .modal-content {
+        border-radius: 10px;
+        border: none;
+    }
+
+    .modal-header {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .modal-title {
+        font-weight: 600;
+    }
+
+
+
+    {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .dashboard-content {
+        padding: 20px 15px;
+    }
+
+    .room-grid {
+        grid-template-columns: 1fr;
+    }
+
+    }
+</style>

@@ -1,0 +1,188 @@
+﻿@model HotelBluebird.Models.ChangePasswordViewModel
+
+@{
+    ViewData["Title"] = "Change Password";
+}
+
+<div class="container-fluid user-dashboard">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 px-0">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>User Panel</h2>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fas fa-hotel me-2"></i>🏨ROOM BOOK</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Index"><i class="fas fa-user me-2"></i>👤USER PROFILE</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="ViewBooking" asp-action="Index"><i class="fas fa-calendar-alt me-2"></i>📅VIEW BOOKING</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Review" asp-action="Index"><i class="fas fa-ticket-alt me-2"></i>✍️REVIEW</a></li>
+                    <li class="nav-item"><a class="nav-link active" asp-controller="ChangePassword" asp-action="Index"><i class="fas fa-lock me-2"></i>🔒CHANGE PASSWORD</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Login"><i class="fas fa-sign-out-alt me-2"></i>⚡LOGOUT</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 ms-auto">
+            <div class="dashboard-content">
+                <div class="header mb-4">
+                    <h3 class="fw-bold">Change Password</h3>
+                    <p class="text-muted">Update your account password</p>
+                </div>
+
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <form asp-action="UpdatePassword" method="post">
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Current Password</label>
+                                <input type="password" class="form-control form-control-lg"
+                                       name="CurrentPassword" placeholder="Enter current password" required>
+                                <div class="form-text">Enter your current password to verify your identity</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">New Password</label>
+                                <input type="password" class="form-control form-control-lg"
+                                       name="NewPassword" placeholder="Enter new password" required>
+                                <div class="form-text">Minimum 8 characters with at least one number and special character</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Confirm New Password</label>
+                                <input type="password" class="form-control form-control-lg"
+                                       name="ConfirmPassword" placeholder="Confirm new password" required>
+                                <div class="form-text">Re-enter your new password to confirm</div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-key me-2"></i>Change Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-color: #16a085;
+        --sidebar-bg: #1f2d3d;
+        --sidebar-hover: rgba(22, 160, 133, 0.2);
+        --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .sidebar {
+        background-color: var(--sidebar-bg);
+        color: white;
+        height: 100vh;
+        position: fixed;
+        width: 260px;
+        padding-top: 20px;
+    }
+
+    .sidebar-header {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 15px;
+    }
+
+    .sidebar h2 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .sidebar .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 12px 20px;
+        border-radius: 4px;
+        margin: 4px 15px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: var(--sidebar-hover);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: var(--primary-color);
+        }
+
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+    .dashboard-content {
+        padding: 30px;
+    }
+
+    .header h3 {
+        color: #2c3e50;
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: var(--card-shadow);
+    }
+
+    .form-control-lg {
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(22, 160, 133, 0.25);
+    }
+
+    .form-label {
+        margin-bottom: 8px;
+    }
+
+    .form-text {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-top: 6px;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        padding: 12px;
+        font-weight: 500;
+        border-radius: 8px;
+    }
+
+        .btn-primary:hover {
+            background-color: #138a72;
+            border-color: #138a72;
+        }
+
+    @@media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .dashboard-content {
+            padding: 20px 15px;
+        }
+    }
+</style>

@@ -1,0 +1,222 @@
+﻿@model List<Hotel_Bulebird.Models.Payment>
+
+
+@{
+    ViewData["Title"] = "Payment Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid admin-dashboard">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-2 px-0">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h3 class="text-center">Admin Panel</h3>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Admin" asp-action="Index">
+                            <i class="fas fa-tachometer-alt me-2"></i>📅DASHBOARD
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ManageUser" asp-action="Index">
+                            👤MANAGE USERS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ManageRoomBooking" asp-action="Index">
+                            <i class="fas fa-calendar-alt me-2"></i>🏨MANAGE BOOKING
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Room" asp-action="Index">
+                            <i class="fas fa-plus-circle me-2"></i>📅ADD ROOM
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-controller="Payment" asp-action="ManagePayment">
+                            <i class="fas fa-money-bill-wave me-2"></i> ₹ PAYMENT
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Staff" asp-action="Index">
+                            <i class="fas fa-users me-2"></i>👤STAFF
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ManageReview" asp-action="Index">
+                            <i class="fas fa-star me-2"></i>🌟MANAGE REVIEW
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="AdminChangePassword" asp-action="Index">
+                            <i class="fas fa-key me-2"></i>🔒CHANGE PASSWORD
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="AdminLogin">
+                            <i class="fas fa-sign-out-alt me-2"></i>⚡LOGOUT
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10 ms-auto">
+            <div class="dashboard-content">
+                <div class="header mb-4">
+                    <h3 class="fw-bold">Payment Management</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="text-muted mb-0">View and manage all payment transactions</p>
+                        <div class="input-group" style="width: 300px;">
+                            <input type="text" class="form-control" placeholder="Search payments...">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Guest</th>
+                                        <th>Room Details</th>
+                                        <th>Stay Period</th>
+                                        <th>Payment Details</th>
+                                        <th>Total</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var payment in Model)
+                                    {
+                                        <tr>
+                                            <td>@payment.PaymentId</td>
+                                            <td>
+                                                <div class="fw-bold">@payment.Username</div>
+                                                <div class="text-muted small">@payment.Email</div>
+                                            </td>
+                                            <td>@payment.RoomType</td>
+                                            <td>@payment.PaymentDate.ToString("dd MMM yyyy")</td>
+                                            <td>₹@payment.TotalAmount</td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <a href="@Url.Action("Print", "Payment", new { id = payment.PaymentId })"
+                                                       class="btn btn-outline-primary" title="Print Invoice">
+                                                        <i class="fas fa-print"></i>
+                                                    </a>
+                                                    <a href="@Url.Action("Delete", "Payment", new { id = payment.PaymentId })"
+                                                       class="btn btn-outline-danger" title="Delete Payment">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-color: #16a085;
+        --sidebar-bg: #1f2d3d;
+        --sidebar-hover: rgba(22, 160, 133, 0.2);
+        --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+        background-color: var(--sidebar-bg);
+        color: white;
+        height: 100vh;
+        position: fixed;
+        width: 250px;
+        padding-top: 20px;
+    }
+
+    .sidebar-header {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 15px;
+    }
+
+    .sidebar h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .sidebar .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 12px 20px;
+        border-radius: 4px;
+        margin: 4px 15px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: var(--sidebar-hover);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: var(--primary-color);
+        }
+
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+    /* Main Content */
+    .dashboard-content {
+        padding: 30px;
+    }
+
+    /* Table Styles */
+    .table {
+        font-size: 0.9rem;
+    }
+
+        .table th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+    /* Responsive Adjustments */
+    @@media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .dashboard-content {
+            padding: 20px 15px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+    }
+</style>

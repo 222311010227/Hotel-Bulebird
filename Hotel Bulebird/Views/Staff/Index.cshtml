@@ -1,0 +1,250 @@
+﻿@model List<HotelBluebird.Models.Staff>
+@{
+    ViewBag.Title = "Manage Staff";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid admin-dashboard">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-2 px-0">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h3 class="text-center">Admin Panel</h3>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Admin" asp-action="Index">
+                            <i class="fas fa-tachometer-alt me-2"></i>📅DASHBOARD
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ManageUser" asp-action="Index">
+                            👤MANAGE USERS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ManageRoomBooking" asp-action="Index">
+                            <i class="fas fa-hotel me-2"></i>🏨MANAGE BOOKING
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Room" asp-action="Index">
+                            <i class="fas fa-plus-circle me-2"></i>📅ADD ROOM
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Payment" asp-action="ManagePayment">
+                            <i class="fas fa-money-bill-wave me-2"></i> ₹ PAYMENT
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-controller="Staff" asp-action="Index">
+                            <i class="fas fa-users me-2"></i>👤STAFF
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="ManageReview" asp-action="Index">
+                            <i class="fas fa-star me-2"></i>🌟MANAGE REVIEW
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="AdminChangePassword" asp-action="Index">
+                            <i class="fas fa-key me-2"></i>🔒CHANGE PASSWORD
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="AdminLogin">
+                            <i class="fas fa-sign-out-alt me-2"></i>⚡LOGOUT
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10 ms-auto">
+            <div class="dashboard-content">
+                <div class="header mb-4">
+                    <h3 class="fw-bold">Welcome, Admin!</h3>
+                    <p class="text-muted">Manage your hotel staff members</p>
+                </div>
+
+                <!-- Add Staff Form -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Add New Staff Member</h5>
+                        <form asp-action="AddStaff" method="post">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" name="name" class="form-control" placeholder="Enter staff name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Role</label>
+                                    <select name="work" class="form-select" required>
+                                        <option value="">Select work role</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Receptionist">Receptionist</option>
+                                        <option value="Housekeeping">Housekeeping</option>
+                                        <option value="Chef">Chef</option>
+                                        <option value="Maintenance">Maintenance</option>
+                                        <option value="Security">Security</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" name="email" class="form-control" placeholder="Enter staff email">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" name="phone" class="form-control" placeholder="Enter phone number">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-user-plus me-2"></i>Add Staff
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Staff List -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Current Staff Members</h5>
+                        <div class="total-staff mb-3">Total: <span class="badge bg-primary">@Model.Count</span></div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th>Contact</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null && Model.Count > 0)
+                                    {
+                                        foreach (var staff in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="fw-bold">@staff.Name</div>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-secondary">@staff.Work</span>
+                                                </td>
+                                                <td>
+                                                    <div>@staff.Email ?? "N/A"</div>
+                                                    <div class="text-muted small">@staff.Phone ?? "N/A"</div>
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Delete", "Staff", new { id = staff.Id })" class="btn btn-outline-danger btn-sm" title="Delete">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="alert alert-info text-center">No staff members found. Please add some staff members.</div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-color: #16a085;
+        --sidebar-bg: #1f2d3d;
+        --sidebar-hover: rgba(22, 160, 133, 0.2);
+        --active-color: #16a085;
+        --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .sidebar {
+        background-color: var(--sidebar-bg);
+        color: white;
+        height: 100vh;
+        position: fixed;
+        width: 250px;
+        padding-top: 20px;
+    }
+
+    .sidebar-header {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 15px;
+    }
+
+    .sidebar h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .sidebar .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 12px 20px;
+        border-radius: 4px;
+        margin: 4px 15px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: var(--sidebar-hover);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: var(--primary-color);
+        }
+
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+    .dashboard-content {
+        padding: 30px;
+    }
+
+    .badge {
+        padding: 0.5em 0.75em;
+        font-weight: 500;
+        border-radius: 4px;
+        font-size: 0.8rem;
+    }
+
+    @@media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .dashboard-content {
+            padding: 20px 15px;
+        }
+    }
+</style>

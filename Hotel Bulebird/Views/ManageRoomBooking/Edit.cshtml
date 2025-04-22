@@ -1,0 +1,73 @@
+﻿@model HotelBluebird.Models.AdminBookingViewModel
+
+@{
+    ViewData["Title"] = "Edit Booking";
+}
+
+<h2>Edit Booking</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" asp-for="Name" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" asp-for="Email" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Country</label>
+        <input type="text" asp-for="Country" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Phone</label>
+        <input type="text" asp-for="Phone" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Room Type</label>
+        <input type="text" asp-for="RoomType" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Bed Type</label>
+        <input type="text" asp-for="BedType" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Number of Rooms</label>
+        <input type="number" asp-for="NumberOfRooms" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Meal</label>
+        <input type="text" asp-for="Meal" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Check-In</label>
+        <input type="date" asp-for="CheckIn" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Check-Out</label>
+        <input type="date" asp-for="CheckOut" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Number of Days</label>
+        <input type="number" asp-for="NumberOfDays" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Status</label>
+        <input type="text" asp-for="Status" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
